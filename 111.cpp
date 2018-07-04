@@ -5,7 +5,17 @@
 #define TURE 1
 int n = 0;   //全局变量标记当前录入职工个数
 
-struct work
+/*函数声明*/
+void read(struct work zggz[]);
+void write(struct work zggz[]);
+void find(struct work zggz[]);
+void list(struct work zggz[]);
+void modify(struct work zggz[]);
+void del(struct work zggz[]);
+void add(struct work zggz[]);
+float grsds(float m);
+
+struct work   /*声明职工工资结构体数组*/
 {
 	char number[10];    //工号
 	char name[10];      //姓名
@@ -17,6 +27,71 @@ struct work
 	float grsds;        //个人所得税
 	float real_salary;  //实发工资
 };
+
+void main()
+{
+	int a;
+	struct work zg[100];
+	read(zg);
+
+	while (TURE)
+	{
+		system("cls");    //清屏命令
+
+		printf("\n");
+		printf("        ###  欢迎使用广西民族大学软件与信息安全学院职工工资管理系统  ###\n");
+		printf("\n");
+		printf("        请选择(1-7):                                                    \n");
+		printf("        ================================================================\n");
+		printf("        |            1. 查询职工工资记录                               |\n");
+		printf("        |            2. 修改职工工资记录                               |\n");
+		printf("        |            3. 添加职工工资记录                               |\n");
+		printf("        |            4. 删除职工工资记录                               |\n");
+		printf("        |            5. 保存职工工资记录                               |\n");
+		printf("        |            6. 浏览职工工资记录                               |\n");
+		printf("        |            7. 退出职工工资记录                               |\n");
+		printf("        ================================================================\n");
+		printf("\n");
+
+		printf("        你的选择是:");
+		scanf("%d",&a);
+
+		if (a<1||a>7)
+		{
+			printf("您输入的数字不是1~7，按任意键返回重新选择");
+			getch();
+		}
+	
+		else
+		{
+			switch (a)
+			{
+				case 1: find(zg);
+					break;
+				case 2: modify(zg);
+					break;
+				case 3: add(zg);
+					break;
+				case 4: del(zg);
+					break;
+				case 5: write(zg);
+					break;
+				case 6: list(zg);
+					break;
+				case 7: printf("\n\t欢迎使用!\n");
+					return;
+					break;
+			}
+
+		}
+
+	}
+
+	system("pause");
+	return;
+
+}
+
 
 /***************************************************************************
 
@@ -173,36 +248,6 @@ void list(struct work zggz[])
 	getch();
 	return;
 
-}
-
-/******************************计算个人所得税********************************/
-
-float grsds(float m)
-{
-	float x;       //全月应纳税所得额
-	float y = 0;    //全月应纳税
-	x = m;
-
-	if (x<500) 
-		y = y + float(x*0.05);
-	else if (x<2000) 
-		y = y + float(500*0.05 + (x-500)*0.1);
-	else if (x<5000) 
-		y = y + float(500*0.05 + 1500*0.1 + (x-2000)*0.15);
-	else if (x<20000) 
-		y = y + float(500*0.05 + 1500*0.1 + 3000*0.15 + (x-5000)*0.2);
-	else if (x<40000) 
-		y = y + float(500*0.05 + 1500*0.1 + 3000*0.15+15000*0.2 + (x-20000)*0.25);
-	else if (x<60000) 
-		y = y + float(500*0.05 + 1500*0.1 + 3000*0.15 + 15000*0.2 + 20000*0.25 + (x-40000)*0.3);
-	else if (x<80000) 
-		y = y + float(500*0.05 + 1500*0.1 + 3000*0.15 + 15000*0.2 + 20000*0.25 + 20000*0.3 + (x-60000)*0.35);
-	else if (x<100000) 
-		y = y + float(500*0.05 + 1500*0.1 + 3000*0.15 + 15000*0.2 + 20000*0.25 + 20000*0.3 + 20000*0.35 + (x-80000)*0.4);
-	else 
-		y = y + float(500*0.05 + 1500*0.1 + 3000*0.15 + 15000*0.2 + 20000*0.25 + 20000*0.3 + 20000*0.35 + 20000*0.4 + (x-100000)*0.45);
-
-		return y;
 }
 
 /****************************************************************************
@@ -388,66 +433,32 @@ void add(struct work zggz[])
      return;
 }
 
-void main()
+/******************************计算个人所得税********************************/
+
+float grsds(float m)
 {
-	int a;
-	struct work zg[100];
-	read(zg);
+	float x;       //全月应纳税所得额
+	float y = 0;    //全月应纳税
+	x = m;
 
-	while (TURE)
-	{
-		system("cls");    //清屏命令
+	if (x<500) 
+		y = y + float(x*0.05);
+	else if (x<2000) 
+		y = y + float(500*0.05 + (x-500)*0.1);
+	else if (x<5000) 
+		y = y + float(500*0.05 + 1500*0.1 + (x-2000)*0.15);
+	else if (x<20000) 
+		y = y + float(500*0.05 + 1500*0.1 + 3000*0.15 + (x-5000)*0.2);
+	else if (x<40000) 
+		y = y + float(500*0.05 + 1500*0.1 + 3000*0.15+15000*0.2 + (x-20000)*0.25);
+	else if (x<60000) 
+		y = y + float(500*0.05 + 1500*0.1 + 3000*0.15 + 15000*0.2 + 20000*0.25 + (x-40000)*0.3);
+	else if (x<80000) 
+		y = y + float(500*0.05 + 1500*0.1 + 3000*0.15 + 15000*0.2 + 20000*0.25 + 20000*0.3 + (x-60000)*0.35);
+	else if (x<100000) 
+		y = y + float(500*0.05 + 1500*0.1 + 3000*0.15 + 15000*0.2 + 20000*0.25 + 20000*0.3 + 20000*0.35 + (x-80000)*0.4);
+	else 
+		y = y + float(500*0.05 + 1500*0.1 + 3000*0.15 + 15000*0.2 + 20000*0.25 + 20000*0.3 + 20000*0.35 + 20000*0.4 + (x-100000)*0.45);
 
-		printf("\n");
-		printf("        ###  欢迎使用广西民族大学软件与信息安全学院职工工资管理系统  ###\n");
-		printf("\n");
-		printf("        请选择(1-7):                                                    \n");
-		printf("        ================================================================\n");
-		printf("        |            1. 查询职工工资记录                               |\n");
-		printf("        |            2. 修改职工工资记录                               |\n");
-		printf("        |            3. 添加职工工资记录                               |\n");
-		printf("        |            4. 删除职工工资记录                               |\n");
-		printf("        |            5. 保存职工工资记录                               |\n");
-		printf("        |            6. 浏览职工工资记录                               |\n");
-		printf("        |            7. 退出职工工资记录                               |\n");
-		printf("        ================================================================\n");
-		printf("\n");
-
-		printf("        你的选择是:");
-		scanf("%d",&a);
-
-		if (a<1||a>7)
-		{
-			printf("您输入的数字不是1~7，按任意键返回重新选择");
-			getch();
-		}
-	
-		else
-		{
-			switch (a)
-			{
-				case 1: find(zg);
-					break;
-				case 2: modify(zg);
-					break;
-				case 3: add(zg);
-					break;
-				case 4: del(zg);
-					break;
-				case 5: write(zg);
-					break;
-				case 6: list(zg);
-					break;
-				case 7: printf("\n\t欢迎使用!\n");
-					return;
-					break;
-			}
-
-		}
-
-	}
-
-	system("pause");
-	return;
-
+		return y;
 }
